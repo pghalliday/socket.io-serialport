@@ -34,7 +34,7 @@ class SerialPort extends EventEmitter {
       this.status = {
         status: 'open'
       };
-      this._nsp.emit('portStatus', this.status);
+      this._nsp.emit('status', this.status);
     });
     this._serialPort.on('error', error => {
       this._log('error', `error on serial port: ${error}`);
@@ -42,7 +42,7 @@ class SerialPort extends EventEmitter {
         status: this.status.status,
         error: error
       };
-      this._nsp.emit('portStatus', this.status);
+      this._nsp.emit('status', this.status);
     });
     this._serialPort.on('disconnect', error => {
       this._log('error', `disconnected serial port: ${error}`);
@@ -50,7 +50,7 @@ class SerialPort extends EventEmitter {
         status: 'disconnected',
         error: error
       };
-      this._nsp.emit('portStatus', this.status);
+      this._nsp.emit('status', this.status);
     });
     this._serialPort.on('close', () => {
       this._log('info', 'closed serial port');
@@ -59,14 +59,14 @@ class SerialPort extends EventEmitter {
         this.status = {
           status: 'closed'
         };
-        this._nsp.emit('portStatus', this.status);
+        this._nsp.emit('status', this.status);
       } else {
         this._retry();
       }
     });
     this._nsp.on('connection', socket => {
       this._log('info', 'socket.io connection');
-      socket.emit('portStatus', this.status);
+      socket.emit('status', this.status);
       ss(socket).on('stream', stream => {
         this._log('info', 'stream');
         this._serialPort.pipe(stream).pipe(_serialPort);
@@ -82,11 +82,11 @@ class SerialPort extends EventEmitter {
       });
     });
     mkdirp.sync(path.dirname(path.resolve(options.captureFile)));
-    const writeFileStream = fs.createWriteStream(
+    const captureFileStream = fs.createWriteStream(
       options.captureFile,
       {flags: 'a'}
     );
-    this._serialPort.pipe(writeFileStream);
+    this._serialPort.pipe(captureFileStream);
   }
 
   open() {
@@ -95,7 +95,7 @@ class SerialPort extends EventEmitter {
       status: 'opening',
       error: this.status.error
     }
-    this._nsp.emit('portStatus', this.status);
+    this._nsp.emit('status', this.status);
     return new Promise((resolve, reject) => {
       this._serialPort.open(promiseCallback(resolve, reject));
     })
@@ -105,7 +105,7 @@ class SerialPort extends EventEmitter {
         status: 'disconnected',
         error: error
       };
-      this._nsp.emit('portStatus', this.status);
+      this._nsp.emit('status', this.status);
       this._retry();
     });
   }
@@ -119,7 +119,7 @@ class SerialPort extends EventEmitter {
       clearTimeout(this._retryTimeout);
       delete this._retryTimeout;
     }
-    this._nsp.emit('portStatus', this.status);
+    this._nsp.emit('status', this.status);
     return new Promise((resolve, reject) => {
       this._serialPort.close(promiseCallback(resolve, reject));
     });
