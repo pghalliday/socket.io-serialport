@@ -28,5 +28,9 @@
     "mkdirp": "^0.5.1",
     "serialport": "^4.0.3",
     "socket.io-stream": "^0.9.1"
+  },
+  "devDependencies": {
+    "socket.io": "^1.5.0",
+    "wscat": "^1.0.1"
   }
 }
