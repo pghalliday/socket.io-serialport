@@ -1,0 +1,32 @@
+{
+  "name": "socket.io-serialport",
+  "version": "1.0.0",
+  "description": "Expose a serial port over a socket.io instance",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pghalliday/socket.io-serialport.git"
+  },
+  "keywords": [
+    "websocket",
+    "socket.io",
+    "serialport"
+  ],
+  "author": "Peter Halliday <pghalliday@gmail.com> (http://pghalliday.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pghalliday/socket.io-serialport/issues"
+  },
+  "homepage": "https://github.com/pghalliday/socket.io-serialport#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "serialport": "^4.0.3",
+    "socket.io-stream": "^0.9.1"
+  }
+}
