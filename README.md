@@ -18,12 +18,12 @@ const SerialPort = require('socket.io-serialport');
 const io = new Server(8080);
 
 const serialport = new SerialPort({
-	io: io,
-	path: '/port/ttyS0',
-	device: '/dev/ttyS0',
-	baudrate: 115200,
+  io: io,
+  path: '/port/ttyS0',
+  device: '/dev/ttyS0',
+  baudrate: 115200,
   retryPeriod: 1000,
-	captureFile: '/var/log/serialport/ttyS0'
+  captureFile: '/var/log/serialport/ttyS0'
 });
 
 serialport.open()
