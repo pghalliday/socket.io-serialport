@@ -1,6 +1,6 @@
 # socket.io-serialport
 
-Expose a serial port over a socket.io instance
+Expose a serial port over a socket.io instance. Particular thanks go to the [serialport](https://github.com/EmergingTechnologyAdvisors/node-serialport), [socket.io-stream](https://github.com/nkzawa/socket.io-stream) and [hterm](https://chromium.googlesource.com/apps/libapps/+/HEAD/hterm) projects.
 
 ## Usage
 
