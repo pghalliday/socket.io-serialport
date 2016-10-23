@@ -82,28 +82,12 @@ or both :)
 
 ### Handling serial port disconnects, etc
 
-Events will be emitted when the remote serial port disconnects/opens. You can use these events to notify a user, etc.
-
-```javascript
-ttyS0.on('portDisconnect', function(error) {
-  console.log(error);
-});
-
-ttyS0.on('portOpening', function(error) {
-  // `error` will only be defined if reopening
-  // after an error
-  console.log(error);
-});
-
-ttyS0.on('portOpen', function() {
-  console.log('opened');
-});
-```
+Events will be emitted when the state of the remote serial port changes. You can use these events to notify a user, etc.
 
 Also on initial connection of the socket an event should be received giving the current status of the port.
 
 ```
-ttyS0.on('portStatus', function(status) {
+ttyS0.on('status', function(status) {
   console.log(status);
 });
 ```
@@ -115,15 +99,3 @@ where `status` will be one of
 - `{status: 'closed'}` - the port is closed after calling `#close`
 - `{status: 'disconnected', error: error}` - the port disconnected and should be reopened after the `retryPeriod`
 - `{status: 'opening', error: error}` - the port is opening, the `error` field will be set if it is reopening after an error
-
-After calling `#close` the following events will be emitted
-
-```
-ttyS0.on('portClosing', function() {
-  console.log('closing');
-});
-
-ttyS0.on('portClosed', function() {
-  console.log('closed');
-});
-```
