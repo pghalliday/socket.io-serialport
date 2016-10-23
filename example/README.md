@@ -7,10 +7,10 @@ Example implementation utilising ChromeOS hterm browser terminal
 Start the example server specifying the serial device and baudrate to use (will listen on port 8080)
 
 ```
-node example.js <device> <baudrate>
+node index.js <device> <baudrate>
 ```
 
-Open the `example.html` file in a browser and open up the javascript console. Status messages will be printed to the console. To open/close the serial port on the server, call the following functions in the browser javascript console
+Open the `index.html` file in a browser and open up the javascript console. Status messages will be printed to the console. To open/close the serial port on the server, call the following functions in the browser javascript console
 
 ```
 openPort();
