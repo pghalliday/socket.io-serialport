@@ -100,10 +100,12 @@ class SerialPort extends EventEmitter {
       this._serialPort.open(promiseCallback(resolve, reject));
     })
     .catch(error => {
+      this._log('error', `error opening serial port: ${error}`);
       this.status = {
         status: 'disconnected',
         error: error
       };
+      this._nsp.emit('portStatus', this.status);
       this._retry();
     });
   }
