@@ -7,7 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "iocat": "iocat --socketio ws://localhost:8080",
+    "iocatPort": "iocat --socketio ws://localhost:8080/serialport",
+    "wscat": "wscat -c 'ws://localhost:8080/socket.io/?EIO=3&transport=websocket'",
+    "wscatPort": "wscat -c 'ws://localhost:8080/socket.io/serialport/?EIO=3&transport=websocket'"
   },
   "repository": {
     "type": "git",
@@ -30,6 +34,7 @@
     "socket.io-stream": "^0.9.1"
   },
   "devDependencies": {
+    "iocat": "^0.4.1",
     "socket.io": "^1.5.0",
     "wscat": "^1.0.1"
   }

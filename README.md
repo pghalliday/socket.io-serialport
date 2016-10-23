@@ -19,7 +19,7 @@ const io = new Server(8080);
 
 const serialport = new SerialPort({
 	io: io,
-	path: 'port/ttyS0',
+	path: '/port/ttyS0',
 	device: '/dev/ttyS0',
 	baudrate: 115200,
   retryPeriod: 1000,

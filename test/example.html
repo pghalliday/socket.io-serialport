@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SerialPortOverHTTP</title>
+  </head>
+  <body>
+    <div id="terminal" style="position:relative; width:100vw; height:100vh"></div>
+    <script src="../node_modules/socket.io-client/socket.io.js"></script>
+    <script src="./hterm_all.js"></script>
+    <script>
+      hterm.defaultStorage = new lib.Storage.Local();
+      var terminal = new hterm.Terminal();
+			var statusDiv = document.getElementById('status');
+			var terminalDiv = document.getElementById('terminal');
+      var socket = io('http://localhost:8080');
+
+      function openPort() {
+        socket.emit('openPort');
+      }
+
+      function closePort() {
+        socket.emit('closePort');
+      }
+
+			function ab2str(buf) {
+				return String.fromCharCode.apply(null, new Uint8Array(buf));
+			}
+
+			function setStatus(status) {
+        if (status.error) {
+          statusDiv.innerHTML = status.status + ': ' + JSON.stringify(status.error);
+        } else {
+          statusDiv.innerHTML = status.status;
+        }
+			}
+
+			terminal.onTerminalReady = function() {
+				var terminalIO = terminal.io.push();
+				var serialport = io('http://localhost:8080/serialport');
+
+        var sendData = function(data) {
+          serialport.emit('data', data);
+        };
+
+				terminalIO.onVTKeystroke = sendData;
+				terminalIO.sendString = sendData;
+
+				terminalIO.onTerminalResize = function(columns, rows) {
+					console.log('resize: ' + columns + ', ' + rows);
+				};
+
+				serialport.on('data', function(data) {
+          data = ab2str(data);
+          terminalIO.print(data);
+				});
+
+				serialport.on('portStatus', function(status) {
+          console.log(status)
+					// setStatus(status);
+				});
+			};
+
+			terminal.decorate(terminalDiv);
+			terminal.installKeyboard();
+    </script>
+  </body>
+</html>
