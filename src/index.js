@@ -24,11 +24,15 @@ class SerialPort extends EventEmitter {
     this.status = {
       status: 'closed'
     };
-    this._nsp = options.io.of(options.path);
-    this._serialPort = new RealSerialPort(options.device, {
-      baudrate: options.baudrate,
-      autoOpen: false
-    });
+    this._nsp = options.io.of(options.route);
+    this._serialPort = new RealSerialPort(
+      options.device,
+      Object.assign(
+        {},
+        options.options || {},
+        {autoOpen: false}
+      )
+    );
     this._serialPort.on('open', () => {
       this._log('info', 'opened serial port');
       this.status = {
@@ -103,7 +107,7 @@ class SerialPort extends EventEmitter {
       this._log('error', `error opening serial port: ${error}`);
       this.status = {
         status: 'disconnected',
-        error: error
+        error: error.toString()
       };
       this._nsp.emit('status', this.status);
       this._retry();

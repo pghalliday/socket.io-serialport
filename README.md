@@ -9,7 +9,7 @@ npm install --save socket.io
 npm install --save socket.io-serialport
 ```
 
-Then to connect to a serial port and open it
+Then to connect to a serial port and open it (note that the `options` field is passed directly to the `serialport` instance, however the `autoOpen` option will always be forced to false)
 
 ```javascript
 const Server = require('socket.io');
@@ -19,11 +19,13 @@ const io = new Server(8080);
 
 const serialport = new SerialPort({
   io: io,
-  path: '/port/ttyS0',
-  device: '/dev/ttyS0',
-  baudrate: 115200,
+  route: '/port/ttyS0',
+  captureFile: '/var/log/serialport/ttyS0',
   retryPeriod: 1000,
-  captureFile: '/var/log/serialport/ttyS0'
+  device: '/dev/ttyS0',
+  options: {
+    baudrate: 115200
+  }
 });
 
 serialport.open()

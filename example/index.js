@@ -12,11 +12,13 @@ const io = new Server(8080);
 
 const serialPort = new SerialPort({
   io: io,
-  path: '/serialport',
+  route: '/serialport',
   device: device,
-  baudrate: parseInt(baudrate),
   retryPeriod: 1000,
-  captureFile: captureFile
+  captureFile: captureFile,
+  options: {
+    baudrate: parseInt(baudrate)
+  }
 });
 
 serialPort.on('log', log => {

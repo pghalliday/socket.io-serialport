@@ -1,6 +1,6 @@
 {
   "name": "socket.io-serialport",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Expose a serial port over a socket.io instance",
   "main": "index.js",
   "directories": {
