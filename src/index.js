@@ -73,7 +73,7 @@ class SerialPort extends EventEmitter {
       socket.emit('status', this.status);
       ss(socket).on('stream', stream => {
         this._log('info', 'stream');
-        this._serialPort.pipe(stream).pipe(_serialPort);
+        this._serialPort.pipe(stream).pipe(this._serialPort);
       });
       socket.on('data', data => {
         this._serialPort.write(data);
